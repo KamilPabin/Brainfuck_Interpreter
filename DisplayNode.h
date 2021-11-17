@@ -5,7 +5,7 @@
 #include <iostream>
 
 
-class DisplayNode : Node {
+class DisplayNode : public Node {
 public:
     void visit(Memory memory) override;
 };
