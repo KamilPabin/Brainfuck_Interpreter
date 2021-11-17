@@ -9,7 +9,7 @@ private:
     std::list<Node *> nodes;
 
 public:
-    void visit(Memory memory) override;
+    void visit(Memory *memory) override;
 
     void addNode(Node *node);
 };

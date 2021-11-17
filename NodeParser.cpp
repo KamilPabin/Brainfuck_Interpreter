@@ -1,36 +1,50 @@
 #include "NodeParser.h"
 
-BodyNode *NodeParser::readTree(std::string *code) {
+BodyNode *NodeParser::parseCode(std::string *code) const {
     auto *rootNode = new BodyNode();
-    int parsedCodeIndex = 0;
+    unsigned long parsedCodeIndex = 0;
     while (code->length() != parsedCodeIndex) {
-        Node *node = readNode(code, &parsedCodeIndex);
+        Node *node = parseNode(code, &parsedCodeIndex);
         rootNode->addNode(node);
     }
     return rootNode;
 }
 
-Node *NodeParser::readNode(const std::string *code, int *parsedCodeIndex) const {
-    switch ((*code)[*parsedCodeIndex]) {
+Node *NodeParser::parseNode(const std::string *code, unsigned long *currentSymbolIndex) const {
+    switch ((*code)[*currentSymbolIndex]) {
         case '>':
-            (*parsedCodeIndex)++;
+            (*currentSymbolIndex)++;
             return new IncrementPointerNode();
         case '<':
-            (*parsedCodeIndex)++;
+            (*currentSymbolIndex)++;
             return new DecrementPointerNode();
         case '+':
-            (*parsedCodeIndex)++;
+            (*currentSymbolIndex)++;
             return new IncrementNode();
         case '-':
-            (*parsedCodeIndex)++;
+            (*currentSymbolIndex)++;
             return new DecrementNode();
         case '.':
-            (*parsedCodeIndex)++;
+            (*currentSymbolIndex)++;
             return new DisplayNode();
         case ',':
-            (*parsedCodeIndex)++;
+            (*currentSymbolIndex)++;
             return new ReadValueNode();
         case '[':
-            break;
+            std::string loopSubCode = findLoopBody(code, currentSymbolIndex);
+            (*currentSymbolIndex) += loopSubCode.length() + 2;
+            return new WhileLoopNode(parseCode(&loopSubCode));
     }
+    return nullptr;
+}
+
+std::string NodeParser::findLoopBody(const std::string *code, const unsigned long *currentSymbolIndex) const {
+    int numberOfUnclosedLoops = 0;
+    int readSymbols = 0;
+    do {
+        if ((*code)[*currentSymbolIndex + readSymbols] == '[') numberOfUnclosedLoops++;
+        if ((*code)[*currentSymbolIndex + readSymbols] == ']') numberOfUnclosedLoops--;
+        readSymbols++;
+    } while (numberOfUnclosedLoops != 0);
+    return code->substr(*currentSymbolIndex + 1, readSymbols - 2);
 }

@@ -5,7 +5,7 @@
 
 class Node {
 public:
-    virtual void visit(Memory memory) = 0;
+    virtual void visit(Memory *memory) = 0;
 };
 
 

@@ -1,7 +1,7 @@
 #include "ReadValueNode.h"
 
-void ReadValueNode::visit(Memory memory) {
+void ReadValueNode::visit(Memory *memory) {
     char value;
     std::cin >> value;
-    memory.putValue(value);
+    memory->putValue(value);
 }

@@ -6,7 +6,7 @@
 
 class IncrementPointerNode : public Node {
 public:
-    void visit(Memory memory) override;
+    void visit(Memory *memory) override;
 };
 
 

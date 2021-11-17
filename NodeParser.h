@@ -9,15 +9,18 @@
 #include "DecrementPointerNode.h"
 #include "IncrementNode.h"
 #include "DecrementNode.h"
+#include "WhileLoopNode.h"
 
 #include <string>
 
 class NodeParser {
 public:
-    BodyNode *readTree(std::string *code);
+    BodyNode *parseCode(std::string *code) const;
 
 private:
-    Node *readNode(const std::string *code, int *parsedCodeIndex) const;
+    Node *parseNode(const std::string *code, unsigned long *currentSymbolIndex) const;
+
+    std::string findLoopBody(const std::string *code, const unsigned long *currentSymbolIndex) const;
 };
 
 
