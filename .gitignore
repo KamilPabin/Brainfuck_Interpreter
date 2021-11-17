@@ -5,3 +5,5 @@ CMakeCache.txt
 CMakeFiles
 Makefile
 brainfuck
+Testing
+brainfuck.cbp
