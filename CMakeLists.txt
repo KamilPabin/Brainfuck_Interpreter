@@ -3,4 +3,4 @@ project(brainfuck)
 
 set(CMAKE_CXX_STANDARD 14)
 
-add_executable(brainfuck main.cpp Memory.cpp Memory.h)
+add_executable(brainfuck main.cpp Memory.cpp Memory.h Node.h RootNode.cpp RootNode.h DisplayNode.cpp DisplayNode.h)
