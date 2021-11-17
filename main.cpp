@@ -1,10 +1,10 @@
 #include <iostream>
 #include <string>
+#include "Memory.h"
 
 using namespace std;
 
-char memory[30000] = {0};
-char *pointer = memory;
+Memory memory;
 
 void runCode(const string &code);
 
@@ -21,33 +21,35 @@ void runCode(const string &code) {
     while (code.length() != parsedCodeIndex) {
         switch (code[parsedCodeIndex]) {
             case '>':
-                pointer++;
+                memory.movePointerForward();
                 parsedCodeIndex++;
                 break;
             case '<':
-                pointer--;
+                memory.movePointerBackward();
                 parsedCodeIndex++;
                 break;
             case '+':
-                (*pointer)++;
+                memory.increment();
                 parsedCodeIndex++;
                 break;
             case '-':
-                (*pointer)--;
+                memory.decrement();
                 parsedCodeIndex++;
                 break;
             case '.':
-                cout << *pointer;
+                cout << memory.readValue();
                 parsedCodeIndex++;
                 break;
             case ',':
-                cin >> *pointer;
+                char val;
+                cin >> val;
+                memory.putValue(val);
                 parsedCodeIndex++;
                 break;
             case '[':
                 int closingLoopBracketOffsetFromOpeningBracket = findClosingLoopBracketOffset(code, parsedCodeIndex);
                 string subCode = code.substr(parsedCodeIndex + 1, closingLoopBracketOffsetFromOpeningBracket - 1);
-                while (*pointer != 0) {
+                while (memory.readValue() != 0) {
                     runCode(subCode);
                 }
                 parsedCodeIndex += closingLoopBracketOffsetFromOpeningBracket + 1;
