@@ -1,11 +1,11 @@
-#include "RootNode.h"
+#include "BodyNode.h"
 
-void RootNode::visit(Memory memory) {
+void BodyNode::visit(Memory memory) {
     for (const auto &node: nodes) {
         node->visit(memory);
     }
 }
 
-void RootNode::addNode(Node *node) {
+void BodyNode::addNode(Node *node) {
     this->nodes.push_back(node);
 }

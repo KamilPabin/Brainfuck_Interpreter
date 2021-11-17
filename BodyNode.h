@@ -1,10 +1,10 @@
-#ifndef BRAINFUCK_ROOTNODE_H
-#define BRAINFUCK_ROOTNODE_H
+#ifndef BRAINFUCK_BODYNODE_H
+#define BRAINFUCK_BODYNODE_H
 
 #include <list>
 #include "Node.h"
 
-class RootNode : Node {
+class BodyNode : Node {
 private:
     std::list<Node *> nodes;
 
@@ -15,4 +15,4 @@ public:
 };
 
 
-#endif //BRAINFUCK_ROOTNODE_H
+#endif //BRAINFUCK_BODYNODE_H

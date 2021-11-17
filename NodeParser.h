@@ -2,7 +2,7 @@
 #define BRAINFUCK_NODEPARSER_H
 
 
-#include "RootNode.h"
+#include "BodyNode.h"
 #include "DisplayNode.h"
 #include "ReadValueNode.h"
 #include "IncrementPointerNode.h"
@@ -14,7 +14,7 @@
 
 class NodeParser {
 public:
-    RootNode *readTree(std::string *code);
+    BodyNode *readTree(std::string *code);
 
 private:
     Node *readNode(const std::string *code, int *parsedCodeIndex) const;

@@ -1,7 +1,7 @@
 #include "NodeParser.h"
 
-RootNode *NodeParser::readTree(std::string *code) {
-    auto *rootNode = new RootNode();
+BodyNode *NodeParser::readTree(std::string *code) {
+    auto *rootNode = new BodyNode();
     int parsedCodeIndex = 0;
     while (code->length() != parsedCodeIndex) {
         Node *node = readNode(code, &parsedCodeIndex);
