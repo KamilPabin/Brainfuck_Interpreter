@@ -38,6 +38,9 @@ Node *NodeParser::parseNode(const std::string *code, unsigned long *currentSymbo
         case ']':
             throw std::invalid_argument(
                     "Syntax error: Unexpected closing bracket at position: " + std::to_string(*currentSymbolIndex + 1));
+        default:
+            (*currentSymbolIndex)++;
+            break;
     }
     return nullptr;
 }
