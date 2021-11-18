@@ -30,10 +30,14 @@ Node *NodeParser::parseNode(const std::string *code, unsigned long *currentSymbo
         case ',':
             (*currentSymbolIndex)++;
             return new ReadValueNode();
-        case '[':
+        case '[': {
             std::string loopSubCode = findLoopBody(code, currentSymbolIndex);
             (*currentSymbolIndex) += loopSubCode.length() + 2;
             return new WhileLoopNode(parseCode(&loopSubCode));
+        }
+        case ']':
+            throw std::invalid_argument(
+                    "Syntax error: Unexpected closing bracket at position: " + std::to_string(*currentSymbolIndex + 1));
     }
     return nullptr;
 }
@@ -45,6 +49,10 @@ std::string NodeParser::findLoopBody(const std::string *code, const unsigned lon
         if ((*code)[*currentSymbolIndex + readSymbols] == '[') numberOfUnclosedLoops++;
         if ((*code)[*currentSymbolIndex + readSymbols] == ']') numberOfUnclosedLoops--;
         readSymbols++;
+        if (readSymbols + *currentSymbolIndex > code->length()) {
+            throw std::invalid_argument(
+                    "Syntax error: unclosed bracket at position: " + std::to_string(*currentSymbolIndex + 1));
+        }
     } while (numberOfUnclosedLoops != 0);
     return code->substr(*currentSymbolIndex + 1, readSymbols - 2);
 }
